@@ -47,6 +47,9 @@ int main() {
     samples_buf[ii] = sample;
   }
 
+  tp_audio_write_wav(&allocator, samples,
+                     tp_string_from_string_constant("out.wav"), 1, 44100);
+
   while (true) {
     tp_audio_write(&allocator, audio, samples);
   }
