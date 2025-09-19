@@ -68,7 +68,8 @@ int main(void) {
     TP_ASSERT(frame.rows >= 735);
 
     tp_slice_i16 samples;
-    i16 samples_buf[735 * 2] = {0};
+    // i16 samples_buf[735 * 2] = {0};
+    i16 samples_buf[735] = {0};
     samples.data = samples_buf;
     samples.count = sizeof(samples_buf) / sizeof(samples_buf[0]);
     for (usize ii = 0; ii < 735; ii++) {
@@ -95,13 +96,16 @@ int main(void) {
 
       f32 average_luminance = (f32)total_luminance / frame.cols;
       i16 sample = ((average_luminance / 255.0) - 0.5) * 2.0 * TP_I16_MAX;
+      samples_buf[ii] = sample;
+      /*
       samples_buf[ii * 2] = sample;
       if (ii > 0) {
         samples_buf[ii * 2 - 1] =
             (samples_buf[ii * 2 - 2] + samples_buf[ii * 2]) / 2;
       }
-      samples_buf[samples.count - 1] = samples_buf[samples.count - 2];
+      */
     }
+    //samples_buf[samples.count - 1] = samples_buf[samples.count - 2];
     tp_audio_write(&allocator, audio, samples);
 
     tp_allocator_free(&allocator, (void **)&frame.data);
