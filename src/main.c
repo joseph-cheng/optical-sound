@@ -61,9 +61,12 @@ int main(void) {
       &allocator, tp_string_from_string_constant("/dev/video0"));
 
   tp_image frame = tp_camera_capture_frame(&allocator, camera);
-  tp_image_to_bmp(&allocator, frame,
+  tp_image frame_rgb =
+      tp_image_convert_pixel_format(&allocator, frame, TP_PIXEL_FORMAT_RGB);
+  tp_image_to_bmp(&allocator, frame_rgb,
                   tp_string_from_string_constant("frame.bmp"));
   tp_allocator_free(&allocator, (void **)&frame.data);
+  tp_allocator_free(&allocator, (void **)&frame_rgb.data);
   tp_camera_destroy(camera);
 
   return 0;
