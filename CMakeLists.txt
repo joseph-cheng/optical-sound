@@ -13,12 +13,6 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-# Include raylib
-option(CUSTOMIZE_BUILD ON)
-option(SUPPORT_MODULE_RAUDIO OFF)
-option(SUPPORT_MODULE_RMODELS OFF)
-option(SUPPORT_COMPRESSION_API OFF)
-
 set(OPTICAL_SOUND_SRC
   src/main.c
   )
@@ -28,7 +22,7 @@ file(GLOB TRIPOD_SRC deps/tripod/src/tp/*.c deps/tripod/src/tp/*.S)
 
 add_executable(optical-sound ${OPTICAL_SOUND_SRC} ${TRIPOD_SRC})
 target_include_directories(optical-sound PRIVATE deps/tripod/src)
-target_link_libraries(optical-sound PRIVATE raylib m pulse-simple c)
+target_link_libraries(optical-sound PRIVATE m pulse-simple c)
 
 set_property(TARGET optical-sound PROPERTY C_STANDARD 99)
 
